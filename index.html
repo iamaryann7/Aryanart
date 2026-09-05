@@ -1549,15 +1549,28 @@ function playVoice(){
 
 /* ==================================
    POPUP TAP
-================================== */
-
-enterButton.addEventListener(
+=================================
+closeButton.addEventListener(
     "click",
     function(event){
 
         event.preventDefault();
-
         event.stopPropagation();
+
+        /* X dabane par audio unlock hoga */
+        audioUnlocked = true;
+
+        /* X dabate hi prank sound start */
+        playVoice();
+
+        /* Progress line complete */
+        progress.style.width = "100%";
+
+        /* Popup close */
+        popup.classList.remove("show");
+
+    }
+);
 
 
         /*
