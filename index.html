@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<meta name="theme-color"
+      content="#080808">
+
+<title>ARYANART — Contemporary Artist</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#080909;
+    color:#ffffff;
+    font-family:Arial,Helvetica,sans-serif;
+    overflow-x:hidden;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    pointer-events:none;
+    background-image:
+        linear-gradient(#ffffff 1px,transparent 1px),
+        linear-gradient(90deg,#ffffff 1px,transparent 1px);
+    background-size:60px 60px;
+    opacity:.07;
+}
+
+
+/* AUDIO POPUP */
+
+.audio-popup{
+    position:fixed;
+    inset:0;
+    z-index:99999;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:rgba(0,0,0,.72);
+    backdrop-filter:blur(8px);
+}
+
+.audio-popup.show{
+    display:flex;
+}
+
+.popup-box{
+    position:relative;
+    width:min(900px,100%);
+    background:#ffffff;
+    color:#111111;
+    border-radius:26px;
+    padding:42px 48px 58px;
+    display:flex;
+    align-items:flex-start;
+    gap:32px;
+    box-shadow:0 25px 80px rgba(0,0,0,.5);
+}
+
+.speaker{
+    width:125px;
+    height:125px;
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#f0f0f0;
+    border-radius:26px;
+    font-size:55px;
+}
+
+.popup-content{
+    flex:1;
+}
+
+.popup-content h2{
+    font-size:40px;
+    line-height:1.1;
+    font-weight:800;
+}
+
+.popup-content p{
+    margin-top:18px;
+    color:#777b83;
+    font-size:21px;
+    line-height:1.55;
+}
+
+.enter-button{
+    margin-top:25px;
+    border:0;
+    background:#111111;
+    color:#ffffff;
+    padding:16px 28px;
+    border-radius:6px;
+    font-size:12px;
+    font-weight:bold;
+    letter-spacing:3px;
+    cursor:pointer;
+}
+
+.enter-button:active{
+    transform:scale(.97);
+}
+
+.close-button{
+    position:absolute;
+    top:-17px;
+    right:-17px;
+    width:57px;
+    height:57px;
+    border:0;
+    border-radius:50%;
+    background:#ffffff;
+    color:#555555;
+    font-size:38px;
+    cursor:pointer;
+    box-shadow:0 5px 20px rgba(0,0,0,.25);
+}
+
+.popup-line{
+    position:absolute;
+    left:48px;
+    right:48px;
+    bottom:27px;
+    height:6px;
+    background:#eeeeee;
+    border-radius:10px;
+}
+
+.popup-line span{
+    display:block;
+    width:0;
+    height:100%;
+    background:#111111;
+    border-radius:10px;
+    transition:.3s;
+}
+
+
+/* HEADER */
+
+header{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    z-index:1000;
+    height:82px;
+    padding:0 5vw;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:rgba(8,9,9,.94);
+    backdrop-filter:blur(18px);
+    border-bottom:1px solid #292929;
+}
+
+.logo{
+    font-size:23px;
+    font-weight:900;
+    letter-spacing:7px;
+}
+
+.menu-button{
+    width:50px;
+    height:50px;
+    border:1px solid #555555;
+    background:transparent;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    cursor:pointer;
+}
+
+.menu-button span{
+    display:block;
+    width:24px;
+    height:2px;
+    background:#ffffff;
+}
+
+
+/* MENU */
+
+.menu{
+    position:fixed;
+    inset:0;
+    z-index:900;
+    background:#080909;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transform:translateY(-100%);
+    transition:.45s ease;
+}
+
+.menu.open{
+    transform:translateY(0);
+}
+
+.menu ul{
+    list-style:none;
+    text-align:center;
+}
+
+.menu li{
+    margin:25px 0;
+}
+
+.menu a{
+    color:#ffffff;
+    text-decoration:none;
+    font-size:44px;
+    font-weight:900;
+    letter-spacing:2px;
+}
+
+
+/* HERO */
+
+.hero{
+    min-height:100vh;
+    padding:150px 5vw 80px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    border-bottom:1px solid #292929;
+}
+
+.eyebrow{
+    color:#888888;
+    font-size:12px;
+    letter-spacing:6px;
+    margin-bottom:30px;
+}
+
+.hero-title{
+    font-size:clamp(75px,15vw,210px);
+    line-height:.78;
+    letter-spacing:-8px;
+    font-weight:900;
+}
+
+.hero-title span{
+    display:block;
+}
+
+.hero-subtitle{
+    margin-top:30px;
+    color:#aaaaaa;
+    font-size:12px;
+    letter-spacing:7px;
+}
+
+.hero-bottom{
+    margin-top:65px;
+    max-width:1000px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:50px;
+}
+
+.hero-text{
+    color:#aaaaaa;
+    font-size:16px;
+    line-height:1.8;
+}
+
+.button-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+}
+
+.btn{
+    display:inline-block;
+    padding:16px 24px;
+    color:#ffffff;
+    border:1px solid #555555;
+    text-decoration:none;
+    font-size:11px;
+    font-weight:bold;
+    letter-spacing:2px;
+    transition:.3s;
+}
+
+.btn:hover{
+    background:#ffffff;
+    color:#000000;
+}
+
+
+/* MARQUEE */
+
+.marquee{
+    overflow:hidden;
+    white-space:nowrap;
+    padding:20px 0;
+    border-bottom:1px solid #292929;
+}
+
+.marquee-text{
+    display:inline-block;
+    font-size:38px;
+    font-weight:900;
+    letter-spacing:4px;
+    animation:marqueeMove 18s linear infinite;
+}
+
+@keyframes marqueeMove{
+    from{
+        transform:translateX(0);
+    }
+    to{
+        transform:translateX(-50%);
+    }
+}
+
+
+/* SECTIONS */
+
+section{
+    padding:110px 5vw;
+}
+
+.section-top{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:55px;
+}
+
+.number{
+    color:#777777;
+    font-size:11px;
+    letter-spacing:4px;
+}
+
+
+/* GALLERY */
+
+.gallery{
+    border-bottom:1px solid #292929;
+}
+
+.gallery-heading{
+    text-align:center;
+    margin-bottom:55px;
+}
+
+.gallery-heading h2{
+    font-size:clamp(38px,6vw,72px);
+    line-height:1;
+    font-weight:900;
+    margin-bottom:20px;
+}
+
+.gallery-heading p{
+    color:#888888;
+    font-size:11px;
+    letter-spacing:5px;
+    line-height:1.8;
+}
+
+.gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+}
+
+.card{
+    min-width:0;
+}
+
+.image-frame{
+    height:510px;
+    padding:10px;
+    background:#101111;
+    border:1px solid #3b3b3b;
+    overflow:hidden;
+}
+
+.image-frame img{
+    width:100%;
+    height:100%;
+    display:block;
+    object-fit:cover;
+    transition:transform .7s ease;
+}
+
+.image-frame:hover img{
+    transform:scale(1.05);
+}
+
+.card-info{
+    padding:18px 4px 0;
+}
+
+.card-title{
+    font-size:17px;
+    font-weight:bold;
+    letter-spacing:2px;
+}
+
+.card-text{
+    margin-top:8px;
+    color:#777777;
+    font-size:13px;
+    line-height:1.5;
+}
+
+
+/* QUOTE */
+
+.quote{
+    margin-top:70px;
+    padding:50px;
+    border:1px solid #3b3b3b;
+    display:flex;
+    align-items:center;
+    gap:35px;
+}
+
+.quote-symbol{
+    font-size:75px;
+    font-weight:900;
+}
+
+.quote-text{
+    flex:1;
+    color:#dddddd;
+    font-size:19px;
+    line-height:1.7;
+}
+
+.quote-name{
+    color:#999999;
+    font-size:27px;
+    font-style:italic;
+}
+
+
+/* ABOUT */
+
+.about{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:80px;
+    border-bottom:1px solid #292929;
+}
+
+.about h2{
+    margin-top:20px;
+    font-size:clamp(50px,7vw,90px);
+    line-height:.88;
+    font-weight:900;
+}
+
+.about-text{
+    color:#aaaaaa;
+    font-size:16px;
+    line-height:1.9;
+}
+
+.about-text p+p{
+    margin-top:25px;
+}
+
+
+/* CONTACT */
+
+.contact{
+    border-bottom:1px solid #292929;
+}
+
+.contact-box{
+    border:1px solid #3b3b3b;
+    padding:60px;
+}
+
+.contact-box h2{
+    margin:25px 0 45px;
+    font-size:clamp(55px,9vw,125px);
+    line-height:.82;
+    font-weight:900;
+}
+
+
+/* FOOTER */
+
+footer{
+    padding:55px 5vw;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:30px;
+    color:#777777;
+    font-size:10px;
+    letter-spacing:3px;
+}
+
+.footer-logo{
+    color:#ffffff;
+    font-size:20px;
+    font-weight:900;
+    letter-spacing:5px;
+    margin-bottom:10px;
+}
+
+.top-button{
+    color:#ffffff;
+    text-decoration:none;
+    border:1px solid #555555;
+    padding:14px 20px;
+}
+
+
+/* MOBILE */
+
+@media(max-width:750px){
+
+    header{
+        height:74px;
+        padding:0 20px;
+    }
+
+    .logo{
+        font-size:18px;
+        letter-spacing:5px;
+    }
+
+    .hero{
+        padding:125px 20px 65px;
+    }
+
+    .hero-title{
+        font-size:21vw;
+        letter-spacing:-4px;
+    }
+
+    .hero-subtitle{
+        font-size:9px;
+        letter-spacing:5px;
+    }
+
+    .hero-bottom{
+        grid-template-columns:1fr;
+        gap:30px;
+        margin-top:50px;
+    }
+
+    section{
+        padding:80px 20px;
+    }
+
+    .section-top{
+        display:block;
+    }
+
+    .section-top .number:last-child{
+        margin-top:15px;
+    }
+
+    .gallery-grid{
+        grid-template-columns:1fr;
+        gap:40px;
+    }
+
+    .image-frame{
+        height:470px;
+    }
+
+    .quote{
+        display:block;
+        padding:30px 25px;
+    }
+
+    .quote-text{
+        margin-top:20px;
+    }
+
+    .quote-name{
+        margin-top:25px;
+    }
+
+    .about{
+        grid-template-columns:1fr;
+        gap:45px;
+    }
+
+    .contact-box{
+        padding:35px 25px;
+    }
+
+    footer{
+        padding:40px 20px;
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .menu a{
+        font-size:34px;
+    }
+
+    /* MOBILE POPUP */
+
+    .popup-box{
+        display:block;
+        width:94%;
+        padding:28px 24px 62px;
+        border-radius:22px;
+    }
+
+    .speaker{
+        width:78px;
+        height:78px;
+        border-radius:18px;
+        font-size:38px;
+        margin-bottom:22px;
+    }
+
+    .popup-content h2{
+        font-size:28px;
+    }
+
+    .popup-content p{
+        margin-top:14px;
+        font-size:17px;
+        line-height:1.55;
+    }
+
+    .enter-button{
+        width:100%;
+    }
+
+    .close-button{
+        width:48px;
+        height:48px;
+        right:-8px;
+        top:-14px;
+        font-size:32px;
+    }
+
+    .popup-line{
+        left:24px;
+        right:24px;
+        bottom:27px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<audio
+    id="voice"
+    src="20260905_042415_Trim1.m4a"
+    preload="auto">
+</audio>
+
+
+<div
+    class="audio-popup"
+    id="audioPopup">
+
+    <div class="popup-box">
+
+        <button
+            class="close-button"
+            id="closeButton"
+            type="button">
+
+            ×
+
+        </button>
+
+        <div class="speaker">
+            🔊
+        </div>
+
+        <div class="popup-content">
+
+            <h2>
+                Enhance Your Experience
+            </h2>
+
+            <p>
+                Turn up your volume for relaxing
+                background music while browsing
+                the gallery.
+            </p>
+
+            <button
+                class="enter-button"
+                id="enterButton"
+                type="button">
+
+                TAP TO ENTER
+
+            </button>
+
+        </div>
+
+        <div class="popup-line">
+
+            <span id="popupProgress"></span>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<header>
+
+    <div class="logo">
+        ARYANART
+    </div>
+
+    <button
+        class="menu-button"
+        id="menuButton"
+        type="button">
+
+        <span></span>
+        <span></span>
+        <span></span>
+
+    </button>
+
+</header>
+
+
+<nav
+    class="menu"
+    id="menu">
+
+    <ul>
+
+        <li>
+            <a href="#home">HOME</a>
+        </li>
+
+        <li>
+            <a href="#gallery">GALLERY</a>
+        </li>
+
+        <li>
+            <a href="#about">ABOUT</a>
+        </li>
+
+        <li>
+            <a href="#contact">CONTACT</a>
+        </li>
+
+    </ul>
+
+</nav>
+
+
+<main id="home">
+
+
+<section class="hero">
+
+    <div class="eyebrow">
+        WELCOME TO MY WORLD
+    </div>
+
+    <h1 class="hero-title">
+
+        <span>ARYAN</span>
+
+        <span>ART</span>
+
+    </h1>
+
+    <div class="hero-subtitle">
+        CONTEMPORARY ARTIST / 2026
+    </div>
+
+    <div class="hero-bottom">
+
+        <p class="hero-text">
+
+            Art in visuals, vibes in moments.
+            Capturing people, places and memories
+            in their most natural form.
+
+        </p>
+
+        <div class="button-row">
+
+            <a
+                href="#gallery"
+                class="btn">
+
+                EXPLORE GALLERY →
+
+            </a>
+
+            <a
+                href="#about"
+                class="btn">
+
+                ABOUT ARYANART
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<div class="marquee">
+
+    <div class="marquee-text">
+
+        ARYANART • MOMENTS • FRIENDS • MEMORIES •
+        ARYANART • MOMENTS • FRIENDS • MEMORIES •
+        ARYANART • MOMENTS • FRIENDS • MEMORIES •
+
+    </div>
+
+</div>
+
+
+<section
+    class="gallery"
+    id="gallery">
+
+    <div class="section-top">
+
+        <div class="number">
+            01 / MY GALLERY
+        </div>
+
+        <div class="number">
+            PEOPLE / MOMENTS / MEMORIES
+        </div>
+
+    </div>
+
+    <div class="gallery-heading">
+
+        <h2>
+            PEOPLE WHO MAKE LIFE SPECIAL
+        </h2>
+
+        <p>
+            SOME MOMENTS ARE NOT JUST PICTURES.
+            THEY ARE MEMORIES.
+        </p>
+
+    </div>
+
+    <div class="gallery-grid">
+
+
+        <div class="card">
+
+            <div class="image-frame">
+
+                <img
+                    src="IMG-20260312-WA0051.jpg"
+                    alt="Friends">
+
+            </div>
+
+            <div class="card-info">
+
+                <div class="card-title">
+                    FRIENDS FOREVER
+                </div>
+
+                <div class="card-text">
+                    Different people.
+                    Same memories.
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="image-frame">
+
+                <img
+                    src="IMG-20260815-WA0018.jpg"
+                    alt="Friends">
+
+            </div>
+
+            <div class="card-info">
+
+                <div class="card-title">
+                    GOOD TIMES
+                </div>
+
+                <div class="card-text">
+                    Good people make
+                    ordinary days special.
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="image-frame">
+
+                <img
+                    src="IMG_20260815_182709.jpg"
+                    alt="Memory">
+
+            </div>
+
+            <div class="card-info">
+
+                <div class="card-title">
+                    A MOMENT
+                </div>
+
+                <div class="card-text">
+                    A simple moment worth
+                    remembering.
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="quote">
+
+        <div class="quote-symbol">
+            “
+        </div>
+
+        <div class="quote-text">
+
+            Good friends, random plans and
+            unforgettable moments —
+            this is what life is all about.
+
+        </div>
+
+        <div class="quote-name">
+            — Aryan
+        </div>
+
+    </div>
+
+</section>
+
+
+<section
+    class="about"
+    id="about">
+
+    <div>
+
+        <div class="number">
+            02 / ABOUT
+        </div>
+
+        <h2>
+
+            ART IS<br>
+            A WAY OF<br>
+            SEEING.
+
+        </h2>
+
+    </div>
+
+    <div class="about-text">
+
+        <p>
+
+            ARYANART is a personal visual
+            project built around creativity,
+            people, memories and everyday life.
+
+        </p>
+
+        <p>
+
+            Every picture has a story.
+            Every person adds something.
+            Every moment becomes a memory.
+
+        </p>
+
+        <p>
+
+            This website is a small collection
+            of those moments.
+
+        </p>
+
+    </div>
+
+</section>
+
+
+<section
+    class="contact"
+    id="contact">
+
+    <div class="contact-box">
+
+        <div class="number">
+            03 / CONTACT
+        </div>
+
+        <h2>
+
+            LET'S<br>
+            CREATE<br>
+            SOMETHING.
+
+        </h2>
+
+        <a
+            href="mailto:kumararyan42166@gmail.com"
+            class="btn">
+
+            START A PROJECT
+
+        </a>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+<footer>
+
+    <div>
+
+        <div class="footer-logo">
+            ARYANART
+        </div>
+
+        <div>
+            ART / PEOPLE / MOMENTS / LIFE
+        </div>
+
+    </div>
+
+    <div>
+        © 2026 ARYANART
+    </div>
+
+    <a
+        href="#home"
+        class="top-button">
+
+        BACK TO TOP ↑
+
+    </a>
+
+</footer>
+<script>
+
+/* ==================================
+   AUDIO + POPUP
+================================== */
+
+const audio = document.getElementById("voice");
+const popup = document.getElementById("audioPopup");
+const enterButton = document.getElementById("enterButton");
+const closeButton = document.getElementById("closeButton");
+const progress = document.getElementById("popupProgress");
+
+let audioUnlocked = false;
+
+
+/* ==================================
+   SHOW POPUP AFTER 3 SECONDS
+================================== */
+
+window.addEventListener("load", function(){
+
+    setTimeout(function(){
+
+        popup.classList.add("show");
+
+    }, 3000);
+
+});
+
+
+/* ==================================
+   PLAY VOICE FROM BEGINNING
+================================== */
+
+function playVoice(){
+
+    if(!audio){
+        return;
+    }
+
+    audio.pause();
+
+    audio.currentTime = 0;
+
+    audio.volume = 1;
+
+    const result = audio.play();
+
+    if(result !== undefined){
+
+        result.catch(function(){
+
+            console.log("Audio needs user interaction.");
+
+        });
+
+    }
+
+}
+
+
+/* ==================================
+   TAP TO ENTER
+================================== */
+
+enterButton.addEventListener(
+    "click",
+    function(event){
+
+        event.preventDefault();
+
+        event.stopPropagation();
+
+        audioUnlocked = true;
+
+        progress.style.width = "100%";
+
+        playVoice();
+
+        setTimeout(function(){
+
+            popup.classList.remove("show");
+
+        }, 300);
+
+    }
+);
+
+
+/* ==================================
+   X BUTTON
+   X PAR BHI PRANK SOUND BAJEGI
+================================== */
+
+closeButton.addEventListener(
+    "click",
+    function(event){
+
+        event.preventDefault();
+
+        event.stopPropagation();
+
+        audioUnlocked = true;
+
+        progress.style.width = "100%";
+
+        playVoice();
+
+        setTimeout(function(){
+
+            popup.classList.remove("show");
+
+        }, 300);
+
+    }
+);
+
+
+/* ==================================
+   AFTER ENTER OR X:
+   EVERY SCREEN TOUCH = SOUND
+================================== */
+
+document.addEventListener(
+    "pointerdown",
+    function(event){
+
+        if(!audioUnlocked){
+            return;
+        }
+
+        /*
+           Popup ke andar touch par
+           duplicate sound nahi bajana.
+        */
+
+        if(popup.contains(event.target)){
+            return;
+        }
+
+        /*
+           Screen ke kisi bhi doosre
+           point par touch karne par
+           sound beginning se chalega.
+        */
+
+        playVoice();
+
+    },
+    {
+        passive:true
+    }
+);
+
+
+/* ==================================
+   MENU
+================================== */
+
+const menuButton =
+    document.getElementById("menuButton");
+
+const menu =
+    document.getElementById("menu");
+
+
+menuButton.addEventListener(
+    "click",
+    function(event){
+
+        event.preventDefault();
+
+        event.stopPropagation();
+
+        menu.classList.toggle("open");
+
+    }
+);
+
+
+/* ==================================
+   CLOSE MENU AFTER LINK TAP
+================================== */
+
+const menuLinks =
+    document.querySelectorAll(".menu a");
+
+
+menuLinks.forEach(function(link){
+
+    link.addEventListener(
+        "click",
+        function(){
+
+            menu.classList.remove("open");
+
+        }
+    );
+
+});
+
+
+/* ==================================
+   IMAGE ERROR HANDLING
+================================== */
+
+const images =
+    document.querySelectorAll(".image-frame img");
+
+
+images.forEach(function(image){
+
+    image.addEventListener(
+        "error",
+        function(){
+
+            image.style.background = "#171818";
+
+            image.style.objectFit = "contain";
+
+            image.alt = "Image unavailable";
+
+        }
+    );
+
+});
+
+</script>
+
+</body>
+</html>
